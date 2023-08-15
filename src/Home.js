@@ -58,9 +58,9 @@ function Home() {
                         setTitle(e.target.value)
                     }}
                 />
-                <button onClick={edit} >Edit</button>
-                <button ref={Ref} onClick={done} >Done</button>
-                <button ref={submitRef} disabled>get API</button>
+                <button type="button" onClick={edit} >Edit</button>
+                <button type="button" ref={Ref} onClick={done} >Done</button>
+                <button type="submit" ref={submitRef} disabled>get API</button>
             </form>
             {isPending && <p>Loading...</p>}
             {error && <p>{'"' + newTitle + '"' + " is not a valid URL"}</p>}
