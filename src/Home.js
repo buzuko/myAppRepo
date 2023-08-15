@@ -45,7 +45,7 @@ function Home() {
                 Home area
             </p>
             <p>
-                branch:
+                branch: develop
             </p>
             <form onSubmit={handleSubmit}>
                 <input
