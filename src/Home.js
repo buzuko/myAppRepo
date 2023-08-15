@@ -44,6 +44,9 @@ function Home() {
             <p>
                 Home area
             </p>
+            <p>
+                branch:
+            </p>
             <form onSubmit={handleSubmit}>
                 <input
                     ref={inputRef}
