@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import './App.css';
+import axios from "axios"
 
 function Home() {
     const [title, setTitle] = useState('');
@@ -17,20 +18,18 @@ function Home() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setIsPending(true)
         setError(null);
         setData(null)
         setNewTitle(title)
         setTimeout(() => {
-            fetch(title)
-                .then(response => {
-                    return response.json();
-                })
-                .then(info => {
+            const fetchData = async () => {
+                try {
+                    const res = await axios(title);
+                    const info = res.data;
                     setIsPending(false)
                     setData(info)
-
-                })
-                .catch(err => {
+                } catch (err) {
                     if (err.name === 'AbortError') {
                         console.log('fetch aborted')
                     } else {
@@ -38,8 +37,10 @@ function Home() {
                         setIsPending(false);
                         setError(err.message);
                     }
-                });
-        }, 5000);
+                }
+            }
+            fetchData()
+        }, 4000);
         if (error) {
             edit()
         }
