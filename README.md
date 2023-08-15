@@ -2,7 +2,7 @@
 //main branch
 // did in main: done
 //did in dev: done
-//did in sub dev:
+//did in sub dev: done
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
