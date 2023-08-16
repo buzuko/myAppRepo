@@ -1,30 +1,32 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import './App.css';
+import axios from "axios";
+import { AppContext } from './AppProvider';
+import { Link } from "react-router-dom";
 
 function Send() {
     const [info, setInfo] = useState('');
     const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('mario');
-    const [DBInfo, setDBInfo] = useState([])
+    const [isPending, setIsPending] = useState(false);
+    const { data, setData, URL } = useContext(AppContext);
+
+    console.log(URL)
     function handleSubmit(e) {
         e.preventDefault();
+        setIsPending(true)
         const added = { title, body: info }
-        console.log(added)
-        fetch("http://localhost:8000/DBData", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(added)
-        })
-            .then(console.log("done1"))
-    }
-    function check() {
-        fetch("hhttp://localhost:8000/DBData")
-            .then(response => {
-                console.log("here")
-                console.log(response)
-                return response.json();
-            })
-            .then(data => console.log(data))
+        const postData = async () => {
+            try {
+                const resp = await axios.post(URL, added)
+                setData(prev => [...prev, resp.data])
+                console.log(data)
+                setIsPending(false)
+            } catch (error) {
+                console.log(error)
+                setIsPending(false)
+            }
+        }
+        postData()
     }
     return (
         <header className="Send-header">
@@ -44,8 +46,9 @@ function Send() {
                     onChange={(e) => setInfo(e.target.value)}
                 />
                 <button>Add Blog</button>
+                {isPending && <p>...adding</p>}
+                {!isPending && <Link to={"/ConectPage"}>ConectPage</Link>}
             </form>
-            <button onClick={check}>check</button>
         </header>
 
     );

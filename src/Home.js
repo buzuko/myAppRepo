@@ -1,20 +1,20 @@
 import logo from './logo.svg';
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import './App.css';
 import axios from "axios"
+import { AppContext } from './AppProvider';
 
 function Home() {
     const [title, setTitle] = useState('');
     const [error, setError] = useState('');
     const [isPending, setIsPending] = useState(false);
-    const [data, setData] = useState([]);
+    //const [data, setData] = useState([]);
     const inputRef = useRef(null)
     const Ref = useRef(null)
     const submitRef = useRef(null)
     const [newTitle, setNewTitle] = useState("")
-
-
+    const { data, setData, URL, SetURL } = useContext(AppContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,6 +29,7 @@ function Home() {
                     const info = res.data;
                     setIsPending(false)
                     setData(info)
+                    SetURL(title)
                 } catch (err) {
                     if (err.name === 'AbortError') {
                         console.log('fetch aborted')
@@ -40,7 +41,7 @@ function Home() {
                 }
             }
             fetchData()
-        }, 4000);
+        }, 1000);
         if (error) {
             edit()
         }
@@ -85,7 +86,7 @@ function Home() {
             {error && <p>{'"' + newTitle + '"' + " is not a valid URL"}</p>}
             {!error && data && data.length > 0 && (
                 <div>
-                    <Link to={{ pathname: "/InfoRend", state: { data } }}>info</Link>
+                    <Link to={{ pathname: "/ConectPage", state: { data } }}>ConectPage</Link>
                 </div>
             )}
         </header>

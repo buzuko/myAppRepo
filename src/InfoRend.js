@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom";
+import { useContext } from "react"
+import { AppContext } from './AppProvider';
 
 function InfoRend() {
-    const location = useLocation();
-    const { data } = location.state;
-    console.log(data)
 
+    const { data, setData } = useContext(AppContext);
     return (
         <div>
             {
-
                 data.map(post => (
                     <li key={post.id}>
                         <h2>{post.title}</h2>
